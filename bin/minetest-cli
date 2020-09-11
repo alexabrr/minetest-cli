@@ -1,0 +1,5 @@
+#!/home/ec2-user/.rvm/rubies/ruby-2.7.1/bin/ruby -wU
+
+require 'minetest/cli'
+
+puts "Hello, world!"
