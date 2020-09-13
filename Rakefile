@@ -22,3 +22,18 @@ task :changelog do
 	helper.remove_lines("CHANGELOG.md", 9, 1)
 	helper.append_lines("CHANGELOG.md", "Copyright © 2020 Alex Abreu")
 end
+
+task :console do
+	require 'irb'
+	require 'irb/completion'
+	require 'minetest/cli' # Aponta para o start file da aplicação
+	
+	def reload!
+		
+		files = $LOADED_FEATURES.select { |feat| feat =~ /\/my_gem\// }
+		files.each {  |file| load file }
+	end
+	
+	ARGV.clear
+	IRB.start
+end

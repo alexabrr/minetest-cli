@@ -2,4 +2,4 @@
 
 require 'minetest/cli'
 
-puts "Hello, world!"
+Minetest::CommandInterface.start( ARGV )
