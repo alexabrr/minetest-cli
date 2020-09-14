@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    minetest-cli (0.2.0)
+    minetest-cli (0.2.1)
       highline
       httparty
       thor
