@@ -134,8 +134,8 @@ module Minetest
       
       if (["list", "create", "restore"].include? sub_command.downcase)
         
-        backup_directory_name = "./backup-files"
-        conf_directory_name = "./custom-maps"
+        backup_directory_name = "/home/ec2-user/environment/backup-files"
+        conf_directory_name = "/home/ec2-user/environment/backup-files/custom-maps"
         backup_list = []
         
         if "list".include? sub_command.downcase
@@ -190,7 +190,47 @@ module Minetest
           
         elsif "restore".include? sub_command.downcase
           
-          puts "for you to implement, and don´t forget the backup levels option ..."
+          if Dir.exist? ("#{backup_directory_name}")
+            if !Dir.empty? ("#{backup_directory_name}")
+              
+              begin
+                
+                existing_files = (Dir.glob("#{backup_directory_name}/*.backup"))
+                
+                existing_files.each do |file|
+                  backup_list << File.basename(file)
+                end  
+                
+                puts "Available files to restore:"
+                n = 0
+                backup_list.each do |e|
+                  n += 1
+                  puts "  [#{n}}] -> #{e}"
+                  
+                end
+                
+                option = ask "Which file do you wish to restore?"
+                option = option.chomp.to_i
+                
+                if option <= n && !option.nil? && !option.zero?
+                  confirmed = ask "Are you sure? [Y/N]"
+                  confirmed = confirmed[0].chomp.downcase
+                  
+                  if confirmed == "y"
+                    puts "#{[backup_list[option - 1]]} was restored to #{[backup_directory_name]}."
+                  end
+                
+                else
+                  puts "Operation aborted. The user did not select a proper number."
+                end
+              
+              rescue
+                help("restore")
+              # end begin
+              end
+            end
+          end
+        # elsif
         end
           
       else
@@ -258,7 +298,6 @@ module Minetest
     
     # End remove
     end
-    
     
     
     
